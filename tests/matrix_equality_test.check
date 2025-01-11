@@ -1,0 +1,36 @@
+#include "../matrix.h"
+
+#include <stdlib.h>
+
+#suite matrix_equality_test 
+
+
+#test mat_10x10_1 
+matrix_t A;
+int rows = 10;
+int cols = 10;
+int error_code = s21_create_matrix_fill(rows, cols, &A, 1);
+ck_assert_int_eq(error_code, S21_OK);
+for (int i = 0; i < rows; ++i) {
+  for (int j = 0; j < cols; ++j) {
+    ck_assert_double_eq(A.matrix[i][j], 1.0);
+  }
+}
+
+s21_remove_matrix(&A);
+
+
+#test mat_123_321_88
+matrix_t A;
+int rows = 123;
+int cols = 321;
+double value = 88.0;
+int error_code = s21_create_matrix_fill(rows, cols, &A, value);
+ck_assert_int_eq(error_code, S21_OK);
+for (int i = 0; i < rows; ++i) {
+  for (int j = 0; j < cols; ++j) {
+    ck_assert_double_eq(A.matrix[i][j], value);
+  }
+}
+
+s21_remove_matrix(&A);

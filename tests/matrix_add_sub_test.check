@@ -1,0 +1,41 @@
+#include "../matrix.h"
+
+#include <stdlib.h>
+
+#suite matrix_add_sub_test
+
+#test add_sq_zeros_and_ones
+int n = 5;
+matrix_t A, B, RES, EXP;
+ck_assert_int_eq(s21_create_matrix_fill(n, n, &A, 0), S21_OK);
+ck_assert_int_eq(s21_create_matrix_fill(n, n, &B, 1), S21_OK);
+ck_assert_int_eq(s21_create_matrix_fill(n, n, &EXP, 1), S21_OK);
+
+int error_code = s21_sum_matrix(&A, &B, &RES);
+
+ck_assert_int_eq(error_code, S21_OK);
+ck_assert_int_eq(s21_eq_matrix(&RES, &EXP), S21_MATRIX_EQ);
+
+s21_remove_matrix(&A);
+s21_remove_matrix(&B);
+s21_remove_matrix(&RES);
+s21_remove_matrix(&EXP);
+
+
+#test add_sq_ones_and_zeros
+int n = 5;
+matrix_t A, B, RES, EXP;
+ck_assert_int_eq(s21_create_matrix_fill(n, n, &A, 1), S21_OK);
+ck_assert_int_eq(s21_create_matrix_fill(n, n, &B, 0), S21_OK);
+ck_assert_int_eq(s21_create_matrix_fill(n, n, &EXP, 1), S21_OK);
+
+int error_code = s21_sum_matrix(&A, &B, &RES);
+
+ck_assert_int_eq(error_code, S21_OK);
+ck_assert_int_eq(s21_eq_matrix(&RES, &EXP), S21_MATRIX_EQ);
+
+s21_remove_matrix(&A);
+s21_remove_matrix(&B);
+s21_remove_matrix(&RES);
+s21_remove_matrix(&EXP);
+

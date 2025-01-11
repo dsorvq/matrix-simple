@@ -1,0 +1,46 @@
+#include "../matrix.h"
+
+#include <stdlib.h>
+
+// TODO: Add error checking tests
+// currently i have no idea what error codes to return
+#suite create_validate_remove_test
+
+#test create_valid_matrix_delete 
+matrix_t A;
+int create_code = s21_create_matrix(10, 11, &A);
+ck_assert_int_eq(create_code, S21_OK);
+ck_assert_int_eq(A.rows, 10);
+ck_assert_int_eq(A.columns, 11);
+ck_assert_int_eq(s21_is_matrix_valid(&A), S21_OK);
+s21_remove_matrix(&A);
+
+
+#test try_to_create_zero_rows_matrix 
+matrix_t A;
+int create_code = s21_create_matrix(0, 11, &A);
+ck_assert_int_eq(create_code, S21_INVALID_MATRIX);
+
+
+#test try_to_create_zero_cols_matrix 
+matrix_t A;
+int create_code = s21_create_matrix(11, 0, &A);
+ck_assert_int_eq(create_code, S21_INVALID_MATRIX);
+
+
+#test try_to_create_neg_rows_matrix 
+matrix_t A;
+int create_code = s21_create_matrix(-1, 10, &A);
+ck_assert_int_eq(create_code, S21_INVALID_MATRIX);
+
+
+#test try_to_create_neg_cols_matrix 
+matrix_t A;
+int create_code = s21_create_matrix(11, -1, &A);
+ck_assert_int_eq(create_code, S21_INVALID_MATRIX);
+
+
+#test try_to_create_matrix_from_NULL
+int create_code = s21_create_matrix(11, 11, NULL);
+ck_assert_int_eq(create_code, S21_INVALID_MATRIX);
+
